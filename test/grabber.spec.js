@@ -1,5 +1,5 @@
 
-import Grabber from '../grabber';
+import Grabber from '../dist/grabber';
 
 describe("Grabber: ", () => {
 
@@ -27,7 +27,7 @@ describe("Grabber: ", () => {
     }).toThrowError(`Please specify api url`);
   })
 
-  it("should return correct output", () => {
+  it("should return correct output for request.js", () => {
     const lib = new Grabber({ inputType: 'express', outputType: 'request', url: 'http://example.comm'});
 
     const result = lib.grab({
@@ -45,6 +45,25 @@ describe("Grabber: ", () => {
       headers: {},
       formData: { value: 100 },
       json: true
+    });
+  });
+
+  it("should return correct output for axios.js", () => {
+    const lib = new Grabber({ inputType: 'express', outputType: 'axios', url: 'http://example.comm'});
+
+    const result = lib.grab({
+      route: { path: '/api/test-route'},
+      method: 'post',
+      params: { x: 12 },
+      query: { y: 'test' },
+      body: { value: 100 },
+      result: {}
+    });
+
+    expect(result).toMatchObject({
+      method: 'POST',
+      url: 'http://example.comm/api/test-route',
+      data: { value: 100 },
     });
   });
 

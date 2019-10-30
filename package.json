@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/jest ./test/*.spec.js"
+    "test": "node_modules/.bin/jest ./test/*.spec.js",
+    "build": "node_modules/.bin/babel grabber.js --out-file ./dist/grabber.js"
   },
   "author": "",
   "license": "ISC",

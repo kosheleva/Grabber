@@ -1,10 +1,32 @@
 
-const config = require('./config');
 const fs = require('fs');
+
+const GRABBER_CONFIG = {
+  OUTPUT_STRUCTURES: {
+    'request': {
+      fn: 'request',
+      file: '---------------OUTPUT-REQUEST.txt',
+    },
+    'axios': {
+      fn: 'axios',
+      file: '---------------OUTPUT-AXIOS.txt',
+    },
+  },
+  INPUT_STRUCTURES: {
+    'express': {
+      path: { props: 'route.path', default: '' },
+      method: { props: 'method', default: '' },
+      params: { props: 'params', default: {} },
+      query: { props: 'query', default: {} },
+      body: { props: 'body', default: {} },
+      result: { props: 'result', default: {} },
+    },
+  }
+};
 
 class Grabber {
   constructor(options = {}) {
-    this.config = config;
+    this.config = GRABBER_CONFIG;
     this._validateOptions(options);
     this._init(options);
   }
@@ -69,7 +91,7 @@ class Grabber {
   }
 
   _fillFile() {
-    fs.appendFileSync(this.outputStructure.file, `axios(${JSON.stringify(this.output)})\n`);
+    fs.appendFileSync(this.outputStructure.file, `${this.outputStructure.fn}(${JSON.stringify(this.output)})\n`);
   }
 
   _getRequestOutput() {
