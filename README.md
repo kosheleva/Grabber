@@ -30,3 +30,9 @@ function Handler(req, res, next) {
 
 express.use(Handler);
 ```
+
+*Output file*
+
+```javascript
+axios({"method":"POST","url":"http://example-api.com/api/test-route","data":{"value":100}})
+```
